@@ -1,0 +1,80 @@
+---
+import Nav from '../Nav.astro';
+import Icon from '../Icon.astro';
+
+// Video-call gallery tiles (optimized from Figma export)
+const tiles = [
+	'image11', 'speakerPictureHd2', 'image8',
+	'hillaryUngsonCommunityPicture3', 'speakerPictureHd4', 'image12',
+	'image7', 'hillaryUngsonCommunityPicture1', 'image15',
+	'speakerPictureHd5', 'image14', 'hillaryUngsonCommunityPicture2',
+	'image13', 'speakerPictureHd3', 'image10',
+	'hillaryUngsonCommunityPicture4',
+];
+
+const pills = [
+	{ icon: 'chats', label: '6 Sessions' },
+	{ icon: 'calendar', label: 'November to April' },
+	{ icon: 'plugs', label: 'Diverse connections' },
+];
+---
+
+<section id="top" class="relative overflow-hidden bg-ink text-cream">
+	<Nav />
+
+	<!-- Video-call gallery — bleeds off the top/right on desktop -->
+	<div
+		class="pointer-events-none mt-2 grid grid-cols-3 gap-2 px-6 opacity-90 md:px-10 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:grid-cols-4 lg:gap-2 lg:px-0 lg:w-[46%]"
+		aria-hidden="true"
+	>
+		{
+			tiles.map((t) => (
+				<div class="relative aspect-square overflow-hidden bg-ink-soft">
+					<img
+						src={`/figma/${t}.jpg`}
+						alt=""
+						loading="lazy"
+						class="h-full w-full object-cover"
+					/>
+					<div class="absolute inset-0 ring-1 ring-inset ring-black/20"></div>
+				</div>
+			))
+		}
+	</div>
+	<!-- fade so text stays legible where the grid meets content on desktop -->
+	<div
+		class="pointer-events-none absolute inset-y-0 right-[46%] hidden w-40 bg-gradient-to-r from-ink to-transparent lg:block"
+		aria-hidden="true"
+	>
+	</div>
+
+	<div class="wrap relative z-10 pb-16 pt-6 lg:pb-28 lg:pt-10">
+		<div class="flex min-h-[34rem] flex-col justify-center gap-6 lg:max-w-[54%] lg:min-h-[40rem]">
+			<h1
+				class="font-display text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl"
+			>
+				What could security win you?
+			</h1>
+			<p class="text-2xl leading-snug text-cream lg:text-3xl">6 peer sessions&hellip;</p>
+			<p class="max-w-xl text-lg font-medium leading-relaxed text-cream/60">
+				All settled facts — and pioneers are already turning them into an advantage.
+				Belgium runs ahead of the European schedule, which is a head start if you play
+				it.
+			</p>
+
+			<div class="mt-6 flex flex-col gap-4">
+				<span class="text-base text-cream">Learning Network combining peers and experts</span>
+				<div class="flex flex-wrap gap-3">
+					{
+						pills.map((p) => (
+							<span class="pill">
+								<Icon name={p.icon} class="h-5 w-5" />
+								{p.label}
+							</span>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

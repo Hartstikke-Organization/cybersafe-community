@@ -1,0 +1,35 @@
+---
+import Icon from '../Icon.astro';
+---
+
+<section class="bg-cream text-ink">
+	<div class="wrap flex flex-col items-center py-20 text-center lg:py-section">
+		<h2
+			class="max-w-2xl font-display text-4xl font-medium leading-[1.05] tracking-tight lg:text-5xl"
+		>
+			Outside the profile, or can&rsquo;t make the dates?
+		</h2>
+		<p class="mt-5 max-w-xl text-lg leading-relaxed text-slate">
+			Couldn&rsquo;t make it or didn&rsquo;t meet the requirements? Don&rsquo;t worry,
+			we create summaries of our insights for each session. Sign up below.
+		</p>
+
+		<form
+			class="mt-10 flex w-full max-w-xl items-center gap-2 rounded-full border border-ink/15 bg-white p-1.5 pl-5"
+		>
+			<label for="newsletter-email" class="sr-only">Email address</label>
+			<input
+				id="newsletter-email"
+				name="email"
+				type="email"
+				placeholder="Fill in your e-mail address"
+				autocomplete="email"
+				class="min-w-0 flex-1 bg-transparent py-2 text-ink outline-none placeholder:text-slate"
+			/>
+			<button type="submit" class="btn btn-blue shrink-0 text-sm">
+				Apply to join
+				<Icon name="arrow-right" class="h-4 w-4" stroke={2} />
+			</button>
+		</form>
+	</div>
+</section>

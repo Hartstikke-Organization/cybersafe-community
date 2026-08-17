@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+
+const links = [
+	{ label: 'For who', href: '#for-who' },
+	{ label: 'The sessions', href: '#sessions' },
+	{ label: 'How it works', href: '#how-it-works' },
+	{ label: 'Apply to join', href: '#apply' },
+];
+---
+
+<footer class="bg-cream text-ink">
+	<div class="wrap">
+		<nav
+			class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 border-t border-ink/10 py-8 text-sm text-slate"
+		>
+			{
+				links.map((l) => (
+					<a href={l.href} class="transition-colors hover:text-ink">
+						{l.label}
+					</a>
+				))
+			}
+		</nav>
+
+		<div class="flex items-center justify-between gap-4 overflow-hidden pb-10">
+			<span
+				class="font-display text-[13vw] font-medium leading-none tracking-tight whitespace-nowrap text-ink/15"
+			>
+				CyberSafe Community
+			</span>
+			<Icon name="globe" class="hidden h-10 w-10 shrink-0 text-ink/20 sm:block" />
+		</div>
+	</div>
+</footer>

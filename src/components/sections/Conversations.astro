@@ -1,0 +1,58 @@
+---
+import Icon from '../Icon.astro';
+
+const photos = ['image10', 'hillaryUngsonCommunityPicture2', 'speakerPictureHd4'];
+---
+
+<section class="bg-ink text-cream">
+	<div class="wrap grid items-center gap-12 py-20 lg:grid-cols-2 lg:gap-16 lg:py-section">
+		<!-- Photo trio with caption card -->
+		<div class="relative">
+			<div class="flex gap-2">
+				{
+					photos.map((p) => (
+						<div class="relative aspect-[3/4] flex-1 overflow-hidden">
+							<img
+								src={`/figma/${p}.jpg`}
+								alt=""
+								loading="lazy"
+								class="h-full w-full object-cover"
+							/>
+						</div>
+					))
+				}
+			</div>
+			<div class="absolute -bottom-4 left-2 max-w-[18rem] bg-cream p-4 text-ink shadow-xl">
+				<span class="eyebrow text-blue">Question 1</span>
+				<p class="mt-2 text-sm leading-snug">
+					What&rsquo;s the one default setting in your product you&rsquo;d change
+					tomorrow to make insecure use harder? Who do you need to convince?
+				</p>
+			</div>
+		</div>
+
+		<!-- Copy -->
+		<div class="flex flex-col gap-6">
+			<h2 class="font-display text-4xl font-medium leading-[1.08] tracking-tight lg:text-5xl">
+				<span class="text-cream/35 line-through">This isn&rsquo;t a lecture series,</span>
+				<span class="block"
+					>these are intense conversations and you&rsquo;re in them</span
+				>
+			</h2>
+			<p class="max-w-md text-lg leading-relaxed text-cream/60">
+				Small breakouts, pointed questions, and a room built so people can say the
+				part they&rsquo;d normally leave out. Nothing is recorded. Nobody is selling.
+			</p>
+			<div class="mt-2 flex flex-wrap gap-3">
+				<a href="#how-it-works" class="btn btn-cream text-sm">
+					Learn more about the sessions
+					<Icon name="arrow-right" class="h-4 w-4" stroke={2} />
+				</a>
+				<a href="#apply" class="btn btn-ghost text-sm">
+					Apply to join
+					<Icon name="arrow-right" class="h-4 w-4" stroke={2} />
+				</a>
+			</div>
+		</div>
+	</div>
+</section>

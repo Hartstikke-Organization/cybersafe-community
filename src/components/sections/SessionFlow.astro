@@ -1,0 +1,76 @@
+---
+import Icon from '../Icon.astro';
+
+const steps = [
+	{
+		time: '30 m',
+		img: 'image20',
+		title: 'Speaker introduction',
+		sub: '',
+		body: 'Someone with hands-on experience — no vendor, no professional keynote speaker. The good, the bad and the ugly, ending with questions on the table.',
+		indent: '',
+	},
+	{
+		time: '3× 30 m',
+		img: 'image13',
+		title: 'Trio breakouts',
+		sub: '3 Rounds',
+		body: 'One central question on screen. Three people is small enough to say the part you’d normally leave out. Every round a new group is created.',
+		indent: 'lg:ml-24',
+	},
+	{
+		time: '30 m',
+		img: 'image11',
+		title: 'Plenary wrap-up',
+		sub: '',
+		body: 'The host moderates the key insights and the next steps for everyone.',
+		indent: 'lg:ml-48',
+	},
+];
+---
+
+<section id="how-it-works" class="bg-cream text-ink">
+	<div class="wrap py-20 lg:py-section">
+		<div class="mx-auto max-w-2xl text-center">
+			<h2
+				class="font-display text-4xl font-medium leading-[1.05] tracking-tight lg:text-5xl"
+			>
+				Here&rsquo;s how a session goes
+			</h2>
+			<p class="mt-4 text-lg text-slate">
+				Same shape every time, so you always know what you&rsquo;re saying yes to.
+			</p>
+		</div>
+
+		<div class="mx-auto mt-14 flex max-w-4xl flex-col gap-5">
+			{
+				steps.map((s) => (
+					<div
+						class:list={[
+							'flex flex-col items-start gap-5 rounded-2xl bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:gap-6',
+							s.indent,
+						]}
+					>
+						<span class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-sun px-3 py-1 font-mono text-xs font-medium text-ink">
+							<Icon name="hourglass" class="h-3.5 w-3.5" />
+							{s.time}
+						</span>
+						<img
+							src={`/figma/${s.img}.jpg`}
+							alt=""
+							loading="lazy"
+							class="h-24 w-40 shrink-0 rounded-lg object-cover"
+						/>
+						<div>
+							<h3 class="font-display text-xl font-medium tracking-tight">
+								{s.title}
+								{s.sub && <span class="text-slate"> {s.sub}</span>}
+							</h3>
+							<p class="mt-1.5 max-w-md text-sm leading-relaxed text-slate">{s.body}</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

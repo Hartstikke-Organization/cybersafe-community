@@ -1,0 +1,74 @@
+---
+import Icon from '../Icon.astro';
+
+const avatars = [
+	{ src: 'speakerPictureHd4', y: 'lg:translate-y-4' },
+	{ src: 'hillaryUngsonCommunityPicture1', y: 'lg:-translate-y-3' },
+	{ src: 'image8', y: 'lg:translate-y-6' },
+	{ src: 'speakerPictureHd5', y: 'lg:-translate-y-4' },
+	{ src: 'hillaryUngsonCommunityPicture2', y: 'lg:translate-y-3' },
+	{ src: 'image10', y: 'lg:-translate-y-2' },
+];
+
+const criteria = [
+	{ icon: 'chats', text: 'A leader in sales, marketing or product, or a CIO or CEO.' },
+	{
+		icon: 'cpu',
+		text: 'At a company that builds and sells a physical product with software in it (think home automation, connected devices).',
+	},
+	{ icon: 'users', text: 'Between 100 and 1,000 employees.' },
+	{
+		icon: 'pin',
+		text: 'Majority Belgian-owned, with product design based in Belgium.',
+	},
+];
+---
+
+<section id="for-who" class="bg-blue text-cream">
+	<div class="wrap flex flex-col items-center py-20 lg:py-section">
+		<!-- Scattered avatars -->
+		<div class="mb-12 flex items-center justify-center gap-3 sm:gap-5">
+			{
+				avatars.map((a, i) => (
+					<img
+						src={`/figma/${a.src}.jpg`}
+						alt=""
+						loading="lazy"
+						class:list={[
+							'h-12 w-12 rounded-full object-cover ring-2 ring-cream/20 sm:h-16 sm:w-16',
+							a.y,
+							i > 3 ? 'hidden sm:block' : '',
+						]}
+					/>
+				))
+			}
+		</div>
+
+		<div class="max-w-3xl text-center">
+			<h2
+				class="font-display text-4xl font-medium leading-[1.05] tracking-tight lg:text-5xl"
+			>
+				We&rsquo;re bringing together a group of leaders who&rsquo;d rather figure it
+				out together.
+			</h2>
+			<p class="mt-6 text-lg text-cream/70">This is who it&rsquo;s for&hellip;</p>
+		</div>
+
+		<!-- Criteria -->
+		<div class="mt-16 grid w-full gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+			{
+				criteria.map((c) => (
+					<div class="flex flex-col gap-4 border-t border-cream/20 pt-6">
+						<Icon name={c.icon} class="h-7 w-7 text-cream" />
+						<p class="text-base leading-relaxed text-cream/90">{c.text}</p>
+					</div>
+				))
+			}
+		</div>
+
+		<a href="#apply" class="btn btn-cream mt-16 text-sm">
+			Apply to join
+			<Icon name="arrow-right" class="h-4 w-4" stroke={2} />
+		</a>
+	</div>
+</section>

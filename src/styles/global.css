@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS  (from Figma: CyberSafe Community – Webdesign)
+   ============================================================ */
+@theme {
+  /* Brand */
+  --color-ink: #101010;          /* near-black — dark sections */
+  --color-ink-soft: #171717;     /* raised cards on dark */
+  --color-ink-line: #2a2a2a;     /* borders on dark */
+  --color-cream: #f7f5f0;        /* off-white background + light text */
+  --color-blue: #273c8b;         /* royal blue sections + buttons */
+  --color-blue-dark: #1e2f6e;
+  --color-accent: #ef5b34;       /* orange — toggles, in-person pills */
+  --color-sun: #f5c451;          /* yellow — session-flow time pills */
+
+  /* Neutrals (Figma tokens) */
+  --color-graphite: #222222;
+  --color-slate: #666666;
+  --color-mist: #cccccc;
+
+  /* Type */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Section rhythm (padding-section-large = 112px) */
+  --spacing-section: 7rem;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-cream);
+    color: var(--color-ink);
+  }
+  ::selection {
+    background: var(--color-blue);
+    color: var(--color-cream);
+  }
+}
+
+/* ============================================================
+   REUSABLE PATTERNS
+   ============================================================ */
+@layer components {
+  /* Page container — max 1440px, 64px side padding on desktop */
+  .wrap {
+    @apply mx-auto w-full max-w-[90rem] px-6 md:px-10 lg:px-16;
+  }
+
+  /* Small mono/uppercase eyebrow label */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.14em];
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium transition-colors duration-200 whitespace-nowrap;
+  }
+  .btn-cream  { @apply bg-cream text-ink hover:bg-white; }
+  .btn-blue   { @apply bg-blue text-cream hover:bg-blue-dark; }
+  .btn-ink    { @apply bg-ink text-cream hover:bg-ink-soft; }
+  .btn-ghost  { @apply border border-white/25 text-cream hover:bg-white/10; }
+
+  /* Frosted pill (on dark) */
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full bg-white/10 px-6 py-2 text-base text-cream;
+  }
+}

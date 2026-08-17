@@ -1,0 +1,38 @@
+---
+import Icon from '../Icon.astro';
+
+const logos = [
+	{ src: 'image1', alt: 'Toreon' },
+	{ src: 'image2', alt: 'eBO Enterprises' },
+	{ src: 'image3', alt: 'Colruyt Group' },
+	{ src: 'image4', alt: 'Zalando' },
+];
+---
+
+<section class="border-t border-white/10 bg-ink text-cream">
+	<div
+		class="wrap flex flex-col items-center gap-8 py-10 lg:flex-row lg:justify-between lg:gap-6"
+	>
+		<div class="flex items-center gap-3 text-sm text-cream/70">
+			<span
+				class="flex h-6 w-6 items-center justify-center rounded-md bg-blue text-cream"
+			>
+				<Icon name="check" class="h-4 w-4" stroke={2.2} />
+			</span>
+			<span>In partnership with CyberSafe &mdash; Made in Belgium</span>
+		</div>
+
+		<div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+			{
+				logos.map((l) => (
+					<img
+						src={`/figma/${l.src}.png`}
+						alt={l.alt}
+						loading="lazy"
+						class="h-6 w-auto object-contain opacity-70 transition-opacity hover:opacity-100"
+					/>
+				))
+			}
+		</div>
+	</div>
+</section>

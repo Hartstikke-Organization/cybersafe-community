@@ -1,0 +1,46 @@
+---
+const cards = [
+	{ img: 'speakerPictureHd4', cls: '-rotate-[16deg] -translate-x-40 z-10' },
+	{ img: 'hillaryUngsonCommunityPicture2', cls: '-rotate-[8deg] -translate-x-20 z-20' },
+	{ img: 'hillaryUngsonCommunityPicture1', cls: 'z-30', front: true },
+	{ img: 'image8', cls: 'rotate-[8deg] translate-x-20 z-20' },
+	{ img: 'image10', cls: 'rotate-[16deg] translate-x-40 z-10' },
+];
+---
+
+<section class="overflow-hidden bg-cream text-ink">
+	<div class="wrap flex flex-col items-center py-20 lg:py-section">
+		<h2
+			class="max-w-3xl text-center font-display text-3xl font-medium leading-[1.05] tracking-tight lg:text-5xl"
+		>
+			Mixed roles, diverse connections
+			<span class="block text-ink/40">These are the people you&rsquo;ll get to know</span>
+		</h2>
+
+		<div class="relative mt-16 flex h-80 w-full scale-75 items-center justify-center sm:scale-90 lg:mt-20 lg:h-96 lg:scale-100">
+			{
+				cards.map((c) => (
+					<div
+						class:list={[
+							'absolute h-72 w-52 overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5 lg:h-80 lg:w-60',
+							c.cls,
+						]}
+					>
+						<img
+							src={`/figma/${c.img}.jpg`}
+							alt=""
+							loading="lazy"
+							class="h-full w-full object-cover"
+						/>
+						{c.front && (
+							<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+								<p class="font-medium text-white">Jane Doe</p>
+								<p class="text-sm text-white/70">Commercial Director, Zalando</p>
+							</div>
+						)}
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
