@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import Button from './Button.astro';
 
 const links = [
 	{ label: 'For who', href: '#for-who' },
@@ -8,32 +9,32 @@ const links = [
 ];
 ---
 
-<nav class="wrap flex items-center justify-between py-6 text-cream">
-	<!-- Logo mark -->
-	<a href="#top" class="flex items-center gap-2" aria-label="CyberSafe Community — home">
-		<Icon name="globe" class="h-6 w-6" />
-		<span class="text-white/40" aria-hidden="true">&times;</span>
-		<Icon name="chats" class="h-6 w-6" />
-		<span class="sr-only">CyberSafe Community</span>
-	</a>
+<header class="site-nav fixed inset-x-0 top-0 z-50" data-nav data-nav-theme="dark">
+	<div class="container-large relative flex items-center justify-between py-8">
+		<a
+			href="#top"
+			class="site-nav__logo flex items-center gap-1.5"
+			aria-label="CyberSafe Community — home"
+		>
+			<Icon name="globe" class="h-6 w-6" tint />
+			<span class="text-sm opacity-40" aria-hidden="true">&times;</span>
+			<Icon name="chats" class="h-6 w-6" tint />
+			<span class="sr-only">CyberSafe Community</span>
+		</a>
 
-	<!-- Center menu -->
-	<div class="hidden items-center gap-1 md:flex">
-		{
-			links.map((l) => (
-				<a
-					href={l.href}
-					class="rounded-full px-4 py-2 text-base text-cream/90 transition-colors hover:bg-white/10 hover:text-cream"
-				>
-					{l.label}
-				</a>
-			))
-		}
+		<!-- Absolutely centred so the logo and CTA widths never shift it. -->
+		<div
+			class="site-nav__links absolute left-1/2 hidden -translate-x-1/2 items-center gap-2 md:flex"
+		>
+			{
+				links.map((l) => (
+					<a href={l.href} class="site-nav__link px-3 py-2 font-display text-base font-medium">
+						{l.label}
+					</a>
+				))
+			}
+		</div>
+
+		<Button href="#apply" variant="cream" class="site-nav__cta" label="Apply to join →" />
 	</div>
-
-	<!-- CTA -->
-	<a href="#apply" class="btn btn-cream text-sm">
-		Apply to join
-		<Icon name="arrow-right" class="h-4 w-4" stroke={2} />
-	</a>
-</nav>
+</header>

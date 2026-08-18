@@ -1,16 +1,18 @@
 ---
 import Icon from '../Icon.astro';
 
-type Session = {
-	kind: 'session';
-	n: number;
-	title: string;
-	date: string;
-	open?: boolean;
-	desc?: string;
-	host?: { name: string; role: string; avatar: string };
-	type?: string;
+// Every session shares the same panel content for now.
+const panel = {
+	desc: 'Every role feels security differently: sales in RFPs and customer questionnaires, marketing in reputation and trust claims, product in what you dare to build, the CIO in what keeps them up at night, the CEO in liability. And behind each of those sits a different driver: customers demanding it, legislation imposing it (NIS2, CRA), or the threat landscape forcing it (AI, geopolitics). This session lays those perspectives side by side. Participants get to know each other and immediately see the community’s core idea in action: security is broader than "something IT does": it’s something your company is.',
+	host: {
+		name: 'William Visterin',
+		role: 'IT and business journalist',
+		avatar: 'frame16',
+	},
+	type: 'connections + systemic insight',
 };
+
+type Session = { kind: 'session'; n: number; title: string; date: string };
 type InPerson = { kind: 'inperson'; title: string; date: string; img: string };
 
 const items: (Session | InPerson)[] = [
@@ -18,134 +20,128 @@ const items: (Session | InPerson)[] = [
 		kind: 'session',
 		n: 1,
 		title: 'Where does security actually touch your part of the business?',
-		date: '12 Nov 2026',
-		open: true,
-		desc: 'Every role feels security differently: sales in RFPs and customer questionnaires, marketing in reputation and trust claims, product in what you dare to build, the CIO in what keeps them up at night, the CEO in liability. And behind each of those sits a different driver: customers demanding it, legislation imposing it (NIS2, CRA), or the threat landscape forcing it (AI, geopolitics). This session lays those perspectives side by side. Participants get to know each other and immediately see the community’s core idea in action: security is broader than "something IT does": it’s something your company is.',
-		host: {
-			name: 'William Visterin',
-			role: 'IT and business journalist',
-			avatar: 'speakerPictureHd3',
-		},
-		type: 'Connections + Systemic Insight',
+		date: '12 nov 2026',
 	},
 	{
 		kind: 'session',
 		n: 2,
 		title: "Your company already does a lot on security: why can't sales and marketing talk about it?",
-		date: '10 Dec 2026',
+		date: '10 dec 2026',
 	},
 	{
 		kind: 'session',
 		n: 3,
 		title: 'Your product is secure… until your customer uses it. How far does your responsibility reach?',
-		date: '21 Jan 2027',
+		date: '21 jan 2027',
 	},
 	{
 		kind: 'inperson',
 		title: 'Dinner at Kasteel van Laarne',
-		date: '4 Feb 2027',
-		img: 'frame16',
+		date: '4 feb 2027',
+		img: 'image13',
 	},
 	{
 		kind: 'session',
 		n: 4,
 		title: "Everyone has to comply with the CRA. Who's actually going to win something with it?",
-		date: '18 Feb 2027',
+		date: '18 feb 2027',
 	},
 	{
 		kind: 'session',
 		n: 5,
-		title: 'How much risk is your company really willing to take — and would your colleagues give the same answer?',
-		date: '11 Mar 2027',
+		title: 'How much risk is your company really willing to take - and would your colleagues give the same answer?',
+		date: '11 mar 2027',
 	},
 	{
 		kind: 'session',
 		n: 6,
 		title: 'When your incident comes, will you lose trust or win it?',
-		date: '15 Apr 2027',
+		date: '15 apr 2027',
 	},
 ];
 ---
 
-<section id="sessions" class="bg-ink text-cream">
-	<div class="wrap py-20 lg:py-section">
-		<h2 class="font-display text-4xl font-medium leading-[1.05] tracking-tight lg:text-5xl">
-			6 questions <span class="text-cream/40">you&rsquo;ll be able to answer by April</span>
+<section id="sessions" class="overflow-clip bg-ink py-section">
+	<div class="container-large flex flex-col gap-16">
+		<h2
+			class="display max-w-[31.5625rem] text-[2.25rem] leading-none text-white lg:text-h2"
+			data-anim="text"
+		>
+			6 questions <span class="text-white/60">you&rsquo;ll be able to answer by April</span>
 		</h2>
 
-		<div class="mt-12 flex flex-col gap-3">
+		<div class="flex flex-col gap-4" data-anim-cards>
 			{
 				items.map((item) =>
 					item.kind === 'inperson' ? (
-						<div class="grid items-center gap-6 overflow-hidden rounded-2xl bg-cream p-4 text-ink sm:grid-cols-[1fr_auto] sm:p-6">
-							<div class="flex flex-col gap-3">
-								<span class="eyebrow text-slate">In person session</span>
-								<h3 class="font-display text-2xl font-medium tracking-tight">
-									{item.title}
-								</h3>
-								<span class="inline-flex w-fit items-center gap-2 rounded-full bg-accent px-3 py-1 font-mono text-xs uppercase tracking-wider text-ink">
-									<Icon name="calendar" class="h-4 w-4" />
-									{item.date}
+						<div class="flex flex-col items-center gap-6 bg-cream py-4 pl-8 pr-4 sm:flex-row">
+							<div class="flex flex-1 flex-col justify-center gap-2">
+								<span class="eyebrow text-ink/60">In person session</span>
+								<h3 class="display max-w-[42.125rem] text-h4 text-ink">{item.title}</h3>
+								<span class="mt-2 inline-flex w-fit items-center gap-2 bg-accent p-1">
+									<Icon name="calendar" class="h-6 w-6 text-ink" tint />
+									<span class="eyebrow text-ink">{item.date}</span>
 								</span>
 							</div>
 							<img
 								src={`/figma/${item.img}.jpg`}
 								alt="Kasteel van Laarne"
 								loading="lazy"
-								class="h-40 w-full rounded-xl object-cover sm:w-72"
+								class="h-[11.4375rem] w-full object-cover sm:w-[39.1875rem]"
 							/>
 						</div>
 					) : (
-						<details
-							class="group rounded-2xl bg-ink-soft px-5 py-5 open:pb-6 sm:px-7"
-							open={item.open}
-						>
-							<summary class="flex cursor-pointer list-none items-center gap-4 [&::-webkit-details-marker]:hidden">
-								<div class="flex min-w-0 flex-1 flex-col gap-2">
-									<span class="eyebrow text-cream/40">Session {item.n}</span>
-									<h3 class="font-display text-xl font-medium leading-snug tracking-tight sm:text-2xl">
+						<details class="bg-white/10 p-8" data-accordion>
+							<summary
+								class="flex cursor-pointer list-none items-center gap-4 [&::-webkit-details-marker]:hidden"
+								data-accordion-trigger
+							>
+								<div class="flex min-w-0 flex-1 flex-col justify-center gap-2 text-fog">
+									<span class="eyebrow opacity-60">Session {item.n}</span>
+									<h3 class="display max-w-[51.0625rem] text-xl leading-[1.2] sm:text-h4">
 										{item.title}
 									</h3>
 								</div>
-								<span class="hidden shrink-0 items-center gap-2 font-mono text-xs uppercase tracking-wider text-cream/60 sm:flex">
-									<Icon name="calendar" class="h-4 w-4" />
+								<Icon name="calendar-white" class="hidden h-6 w-6 shrink-0 sm:block" />
+								<span class="eyebrow hidden w-[18.75rem] shrink-0 text-fog lg:block">
 									{item.date}
 								</span>
-								<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-accent text-ink">
-									<Icon name="plus" class="h-5 w-5 group-open:hidden" stroke={2.4} />
-									<Icon name="close" class="hidden h-5 w-5 group-open:block" stroke={2.4} />
+								<span class="flex h-10 w-10 shrink-0 items-center justify-center bg-accent">
+									<Icon name="plus" class="accordion-icon h-6 w-6 text-white" tint />
 								</span>
 							</summary>
 
-							{item.desc && (
-								<div class="mt-6 grid gap-3 lg:grid-cols-2">
-									<div class="rounded-xl border border-white/10 bg-ink p-5">
-										<span class="eyebrow text-cream/40">Session description</span>
-										<p class="mt-3 text-sm leading-relaxed text-cream/80">{item.desc}</p>
+							<div data-accordion-panel>
+								<div class="grid grid-cols-1 gap-8 pt-6 lg:grid-cols-2">
+									<div class="flex flex-col gap-6 bg-black p-4">
+										<span class="eyebrow text-white opacity-60">Session Description</span>
+										<p class="text-base font-medium leading-[1.5] text-white">{panel.desc}</p>
 									</div>
-									<div class="flex flex-col gap-3">
-										<div class="rounded-xl border border-white/10 bg-ink p-5">
-											<span class="eyebrow text-cream/40">Host for this session</span>
-											<div class="mt-3 flex items-center gap-3">
+									<div class="flex flex-col gap-8">
+										<div class="flex flex-col gap-6 bg-black p-4">
+											<span class="eyebrow text-white opacity-60">Host for this session</span>
+											<div class="flex items-center gap-6">
 												<img
-													src={`/figma/${item.host!.avatar}.jpg`}
-													alt={item.host!.name}
+													src={`/figma/${panel.host.avatar}.jpg`}
+													alt={panel.host.name}
 													loading="lazy"
-													class="h-11 w-11 rounded-full object-cover"
+													class="h-12 w-12 rounded-full bg-mist object-cover"
 												/>
-												<div>
-													<p class="font-medium">{item.host!.name}</p>
-													<p class="text-sm text-cream/50">{item.host!.role}</p>
+												<div class="flex flex-1 flex-col gap-2 text-white">
+													<p class="display text-h6">{panel.host.name}</p>
+													<p class="text-base font-medium leading-[1.2] opacity-60">
+														{panel.host.role}
+													</p>
 												</div>
 											</div>
 										</div>
-										<div class="rounded-xl border border-white/10 bg-ink p-5">
-											<span class="eyebrow text-cream/40">Session type</span>
-											<p class="mt-2 font-medium">{item.type}</p>
+										<div class="flex flex-1 flex-col gap-6 bg-black p-4">
+											<span class="eyebrow text-white opacity-60">Session type</span>
+											<p class="display text-h6 capitalize text-white">{panel.type}</p>
 										</div>
 									</div>
 								</div>
-							)}
+							</div>
 						</details>
 					)
 				)

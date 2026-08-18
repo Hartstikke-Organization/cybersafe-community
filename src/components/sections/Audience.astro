@@ -1,74 +1,89 @@
 ---
 import Icon from '../Icon.astro';
+import Button from '../Button.astro';
 
+// Arc of avatars across the top — positions are % of the 1348px-wide Figma band
 const avatars = [
-	{ src: 'speakerPictureHd4', y: 'lg:translate-y-4' },
-	{ src: 'hillaryUngsonCommunityPicture1', y: 'lg:-translate-y-3' },
-	{ src: 'image8', y: 'lg:translate-y-6' },
-	{ src: 'speakerPictureHd5', y: 'lg:-translate-y-4' },
-	{ src: 'hillaryUngsonCommunityPicture2', y: 'lg:translate-y-3' },
-	{ src: 'image10', y: 'lg:-translate-y-2' },
+	{ src: 'image8', left: '0%', top: '10.9375rem' },
+	{ src: 'image9', left: '22.48%', top: '4.25rem' },
+	{ src: 'hillaryUngsonCommunityPicture2', left: '44.95%', top: '0rem' },
+	{ src: 'speakerPictureHd4', left: '67.43%', top: '4.25rem' },
+	{ src: 'image10', left: '89.91%', top: '10.9375rem' },
 ];
 
 const criteria = [
-	{ icon: 'chats', text: 'A leader in sales, marketing or product, or a CIO or CEO.' },
+	{ icon: 'projector', text: 'A leader in sales, marketing or product, or a CIO or CEO.' },
 	{
 		icon: 'cpu',
 		text: 'At a company that builds and sells a physical product with software in it (think home automation, connected devices).',
 	},
-	{ icon: 'users', text: 'Between 100 and 1,000 employees.' },
-	{
-		icon: 'pin',
-		text: 'Majority Belgian-owned, with product design based in Belgium.',
-	},
+	{ icon: 'users', text: 'Between 100 and 1,000 employees' },
+	{ icon: 'pin', text: 'Majority Belgian-owned, with product design based in Belgium.' },
 ];
 ---
 
-<section id="for-who" class="bg-blue text-cream">
-	<div class="wrap flex flex-col items-center py-20 lg:py-section">
-		<!-- Scattered avatars -->
-		<div class="mb-12 flex items-center justify-center gap-3 sm:gap-5">
+<section id="for-who" class="relative overflow-clip bg-blue pb-section">
+	<!-- Top padding lives on the content, so the avatar arc can position
+	     against the container's top edge the way it does in Figma. -->
+	<div class="container-large relative">
+		<!-- Avatar arc -->
+		<div
+			class="pointer-events-none absolute left-[3.2%] top-[5.5625rem] hidden h-[19.4375rem] w-[93.6%] lg:block"
+			aria-hidden="true"
+			data-avatar-arc
+		>
 			{
-				avatars.map((a, i) => (
+				avatars.map((a) => (
 					<img
 						src={`/figma/${a.src}.jpg`}
 						alt=""
 						loading="lazy"
-						class:list={[
-							'h-12 w-12 rounded-full object-cover ring-2 ring-cream/20 sm:h-16 sm:w-16',
-							a.y,
-							i > 3 ? 'hidden sm:block' : '',
-						]}
+						class="absolute h-[8.484rem] w-[8.484rem] rounded-full object-cover"
+						style={`left:${a.left};top:${a.top}`}
 					/>
 				))
 			}
 		</div>
 
-		<div class="max-w-3xl text-center">
-			<h2
-				class="font-display text-4xl font-medium leading-[1.05] tracking-tight lg:text-5xl"
-			>
-				We&rsquo;re bringing together a group of leaders who&rsquo;d rather figure it
-				out together.
-			</h2>
-			<p class="mt-6 text-lg text-cream/70">This is who it&rsquo;s for&hellip;</p>
-		</div>
-
-		<!-- Criteria -->
-		<div class="mt-16 grid w-full gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+		<!-- Mobile avatar row -->
+		<div class="pt-16 flex justify-center gap-3 lg:hidden" aria-hidden="true">
 			{
-				criteria.map((c) => (
-					<div class="flex flex-col gap-4 border-t border-cream/20 pt-6">
-						<Icon name={c.icon} class="h-7 w-7 text-cream" />
-						<p class="text-base leading-relaxed text-cream/90">{c.text}</p>
-					</div>
-				))
+				avatars
+					.slice(0, 4)
+					.map((a) => (
+						<img
+							src={`/figma/${a.src}.jpg`}
+							alt=""
+							loading="lazy"
+							class="h-16 w-16 rounded-full object-cover"
+						/>
+					))
 			}
 		</div>
 
-		<a href="#apply" class="btn btn-cream mt-16 text-sm">
-			Apply to join
-			<Icon name="arrow-right" class="h-4 w-4" stroke={2} />
-		</a>
+		<div class="flex flex-col items-center gap-12 pt-12 lg:pt-[22.3125rem]">
+			<div class="flex flex-col items-center gap-6 text-center">
+				<h2 class="display max-w-[41.125rem] text-[2.25rem] leading-[1.1] text-white lg:text-h2" data-anim="text">
+					We&rsquo;re bringing together a group of leaders who&rsquo;d rather figure it
+					out together.
+				</h2>
+				<p class="max-w-[51.875rem] font-display text-xl leading-[1.5] text-cream/60 lg:text-h4">
+					This is who it&rsquo;s for&hellip;
+				</p>
+			</div>
+
+			<div class="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-4" data-anim-cards>
+				{
+					criteria.map((c) => (
+						<div class="flex flex-col items-end justify-between gap-10 bg-cream p-8">
+							<p class="display w-full text-h5 text-ink">{c.text}</p>
+							<Icon name={c.icon} class="h-12 w-12 shrink-0 text-ink" tint />
+						</div>
+					))
+				}
+			</div>
+
+			<Button href="#apply" variant="cream" label="Apply to join →" />
+		</div>
 	</div>
 </section>
