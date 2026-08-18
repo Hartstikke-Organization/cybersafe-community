@@ -1,0 +1,21 @@
+---
+/* Staggering Chars Button — see OSMO.md */
+interface Props {
+	href?: string;
+	type?: 'button' | 'submit';
+	variant?: 'cream' | 'blue' | 'ghost';
+	class?: string;
+	label: string;
+}
+const { href, type, variant = 'cream', class: cls = '', label } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+	href={href}
+	type={href ? undefined : (type ?? 'button')}
+	class:list={['btn-animate-chars', `btn-animate-chars--${variant}`, cls]}
+>
+	<div class="btn-animate-chars__bg"></div>
+	<span data-button-animate-chars class="btn-animate-chars__text">{label}</span>
+</Tag>

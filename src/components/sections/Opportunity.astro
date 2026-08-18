@@ -1,24 +1,25 @@
 ---
 import Icon from '../Icon.astro';
+import Button from '../Button.astro';
 ---
 
-<section class="bg-cream text-ink">
-	<div class="wrap grid gap-10 py-20 lg:grid-cols-2 lg:gap-16 lg:py-section">
-		<h2 class="font-display text-4xl font-medium leading-[1.05] tracking-tight lg:text-5xl">
-			Here&rsquo;s an opportunity on the table.
-			<span class="text-ink/40"> Do you already know what security will win you?</span>
-		</h2>
+<section class="flex items-center overflow-clip bg-cream py-section lg:h-[55.125rem]">
+	<div class="container-large grid w-full grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+		<div class="flex flex-col gap-6">
+			<Icon name="globe" class="h-12 w-12 shrink-0" tint />
+			<h2 class="display text-[2.25rem] leading-[1.1] text-ink lg:text-h2" data-anim="text">
+				<span class="text-ink/40">Here&rsquo;s an opportunity on the table. </span>
+				Do you already know what security will win you?
+			</h2>
+		</div>
 
-		<div class="flex flex-col items-start gap-8 lg:pt-2">
-			<p class="max-w-md text-lg leading-relaxed text-slate">
+		<div class="flex flex-col justify-end gap-6">
+			<p class="text-xl font-medium leading-[1.3] tracking-[-0.03em] text-graphite lg:text-h4" data-anim="text">
 				If the answer to that question is no: no shame. All of this is new — the
 				laws, the geopolitical situation, AI. There IS no best practice yet, and no
 				expert who can explain it all. Nobody has done this before.
 			</p>
-			<a href="#apply" class="btn btn-blue text-sm">
-				Apply to join
-				<Icon name="arrow-right" class="h-4 w-4" stroke={2} />
-			</a>
+			<Button href="#apply" variant="blue" class="w-fit" label="Apply to join →" />
 		</div>
 	</div>
 </section>

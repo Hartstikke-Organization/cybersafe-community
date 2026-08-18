@@ -1,15 +1,11 @@
 ---
-import Nav from '../Nav.astro';
 import Icon from '../Icon.astro';
 
-// Video-call gallery tiles (optimized from Figma export)
-const tiles = [
-	'image11', 'speakerPictureHd2', 'image8',
-	'hillaryUngsonCommunityPicture3', 'speakerPictureHd4', 'image12',
-	'image7', 'hillaryUngsonCommunityPicture1', 'image15',
-	'speakerPictureHd5', 'image14', 'hillaryUngsonCommunityPicture2',
-	'image13', 'speakerPictureHd3', 'image10',
-	'hillaryUngsonCommunityPicture4',
+// Three columns, each cycling the same trio of tiles (Figma: Group 6 / 7 / 8)
+const columns = [
+	['speakerPictureHd3', 'image11', 'hillaryUngsonCommunityPicture3'],
+	['hillaryUngsonCommunityPicture4', 'image12', 'speakerPictureHd5'],
+	['hillaryUngsonCommunityPicture5', 'image14', 'image15'],
 ];
 
 const pills = [
@@ -19,58 +15,75 @@ const pills = [
 ];
 ---
 
-<section id="top" class="relative overflow-hidden bg-ink text-cream">
-	<Nav />
+<section id="top" class="relative overflow-clip bg-ink py-4 lg:h-[61rem]">
+	<div class="container-large relative h-full">
+		<!-- Video-call gallery — 3 columns, right-aligned, bleeding top and bottom -->
+		<div
+			class="pointer-events-none absolute inset-y-0 right-4 hidden w-[35.8125rem] lg:flex"
+			aria-hidden="true"
+		>
+			{
+				columns.map((tiles, i) => (
+					<div class="relative w-[11.9375rem] overflow-clip">
+						<div class={`absolute inset-x-0 top-[-23.1875rem] hero-col hero-col-${i + 1}`}>
+							{[0, 1, 2, 3, 4].map(() =>
+								tiles.map((t) => (
+									<img
+										src={`/figma/${t}.jpg`}
+										alt=""
+										loading="eager"
+										class="block h-[11.9375rem] w-[11.9375rem] object-cover"
+									/>
+								))
+							)}
+						</div>
+					</div>
+				))
+			}
+		</div>
 
-	<!-- Video-call gallery — bleeds off the top/right on desktop -->
-	<div
-		class="pointer-events-none mt-2 grid grid-cols-3 gap-2 px-6 opacity-90 md:px-10 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:grid-cols-4 lg:gap-2 lg:px-0 lg:w-[46%]"
-		aria-hidden="true"
-	>
-		{
-			tiles.map((t) => (
-				<div class="relative aspect-square overflow-hidden bg-ink-soft">
-					<img
-						src={`/figma/${t}.jpg`}
-						alt=""
-						loading="lazy"
-						class="h-full w-full object-cover"
-					/>
-					<div class="absolute inset-0 ring-1 ring-inset ring-black/20"></div>
-				</div>
-			))
-		}
-	</div>
-	<!-- fade so text stays legible where the grid meets content on desktop -->
-	<div
-		class="pointer-events-none absolute inset-y-0 right-[46%] hidden w-40 bg-gradient-to-r from-ink to-transparent lg:block"
-		aria-hidden="true"
-	>
-	</div>
+		<!-- Mobile gallery -->
+		<div class="mt-24 grid grid-cols-3 gap-0 lg:hidden" aria-hidden="true">
+			{
+				columns
+					.flatMap((c) => c.slice(0, 2))
+					.map((t) => (
+						<img
+							src={`/figma/${t}.jpg`}
+							alt=""
+							loading="lazy"
+							class="aspect-square w-full object-cover"
+						/>
+					))
+			}
+		</div>
 
-	<div class="wrap relative z-10 pb-16 pt-6 lg:pb-28 lg:pt-10">
-		<div class="flex min-h-[34rem] flex-col justify-center gap-6 lg:max-w-[54%] lg:min-h-[40rem]">
-			<h1
-				class="font-display text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl"
-			>
-				What could security win you?
-			</h1>
-			<p class="text-2xl leading-snug text-cream lg:text-3xl">6 peer sessions&hellip;</p>
-			<p class="max-w-xl text-lg font-medium leading-relaxed text-cream/60">
-				All settled facts — and pioneers are already turning them into an advantage.
-				Belgium runs ahead of the European schedule, which is a head start if you play
-				it.
-			</p>
+		<div class="relative flex flex-col justify-center gap-20 py-16 lg:h-full lg:py-0">
+			<div class="flex max-w-[51.875rem] flex-col gap-6">
+				<h1 class="display max-w-[47.6875rem] text-[3rem] leading-[0.9] text-cream sm:text-[4.5rem] lg:text-display">
+					What could security win you?
+				</h1>
+				<p class="font-display text-2xl leading-[1.5] text-cream lg:text-h4">
+					6 peer sessions &hellip;
+				</p>
+				<p class="max-w-[33.4375rem] text-lg font-medium leading-[1.5] text-cream/60 lg:text-xl">
+					All settled facts — and pioneers are already turning them into an advantage.
+					Belgium runs ahead of the European schedule, which is a head start if you play
+					it.
+				</p>
+			</div>
 
-			<div class="mt-6 flex flex-col gap-4">
-				<span class="text-base text-cream">Learning Network combining peers and experts</span>
-				<div class="flex flex-wrap gap-3">
+			<div class="flex flex-col gap-4 lg:absolute lg:bottom-0 lg:left-0">
+				<p class="font-display text-base font-medium leading-[1.5] text-cream">
+					Learning Network combining peers and experts
+				</p>
+				<div class="flex max-w-[47.6875rem] flex-wrap gap-4">
 					{
 						pills.map((p) => (
-							<span class="pill">
-								<Icon name={p.icon} class="h-5 w-5" />
+							<a href="#sessions" class="pill">
+								<Icon name={p.icon} class="h-6 w-6" />
 								{p.label}
-							</span>
+							</a>
 						))
 					}
 				</div>
@@ -78,3 +91,75 @@ const pills = [
 		</div>
 	</div>
 </section>
+
+<style>
+	.hero-col {
+		animation-duration: 3.99239s;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+	}
+	.hero-col-1 {
+		animation-name: hero-shift-down;
+	}
+	.hero-col-2 {
+		animation-name: hero-shift-up;
+	}
+	.hero-col-3 {
+		animation-name: hero-shift-short;
+	}
+
+	@keyframes hero-shift-down {
+		0% {
+			animation-timing-function: cubic-bezier(0.874, 0, 0.14, 1);
+			translate: 0 23.875rem;
+		}
+		37.533% {
+			translate: 0 0;
+		}
+		62.694% {
+			animation-timing-function: cubic-bezier(0.89, 0, 0.12, 1);
+			translate: 0 0;
+		}
+		100% {
+			translate: 0 23.875rem;
+		}
+	}
+	@keyframes hero-shift-up {
+		0% {
+			animation-timing-function: cubic-bezier(0.874, 0, 0.14, 1);
+			translate: 0 -23.875rem;
+		}
+		37.533% {
+			translate: 0 0;
+		}
+		62.694% {
+			animation-timing-function: cubic-bezier(0.891, 0, 0.121, 1);
+			translate: 0 0;
+		}
+		100% {
+			translate: 0 -23.875rem;
+		}
+	}
+	@keyframes hero-shift-short {
+		0% {
+			animation-timing-function: cubic-bezier(0.874, 0, 0.14, 1);
+			translate: 0 11.9375rem;
+		}
+		37.532% {
+			translate: 0 0;
+		}
+		62.701% {
+			animation-timing-function: cubic-bezier(0.89, 0, 0.12, 1);
+			translate: 0 0;
+		}
+		100% {
+			translate: 0 11.9375rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-col {
+			animation: none;
+		}
+	}
+</style>
