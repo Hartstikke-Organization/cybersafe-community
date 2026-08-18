@@ -133,176 +133,197 @@
 }
 
 /* ============================================================
-   COMPONENT: Flick Cards Slider  (see OSMO.md)
+   COMPONENT: Radial Cards Slider  (see OSMO.md)
+   Card styling adapted to the project palette; the slider mechanics
+   (rotate/radius custom properties, statuses) are per the reference.
    ============================================================ */
-.flick-group {
-  position: relative;
-}
-
-.flick-group__relative-object {
-  opacity: 0;
-  pointer-events: none;
-  width: 47em;
-  position: relative;
-}
-
-.flick-group__relative-object-before {
-  padding-top: 75%;
-}
-
-.flick-group__collection {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.flick-group__list {
+.radial-gsap-slider {
+  grid-column-gap: 5em;
+  grid-row-gap: 5em;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
   display: flex;
   position: relative;
 }
 
-.flick-group__item {
-  position: absolute;
+[data-radial-slider-init] {
+  --slider-rotate: 18deg;
+  --slider-radius: 375%;
 }
 
-.flick-card {
-  color: #fff;
+.radial-gsap-slider__collection {
+  max-width: 100%;
+  position: relative;
+}
+
+.radial-gsap-slider__list {
   -webkit-user-select: none;
   user-select: none;
-  background-color: #000;
-  border-radius: 0; /* square, per the Figma design */
-  justify-content: center;
-  align-items: center;
-  width: 23.5em;
-  display: flex;
-  position: relative;
-  overflow: hidden;
-}
-
-.flick-card__before {
-  padding-top: 150%;
-}
-
-.flick-card__media {
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-/* Scrim so the name and role stay legible over light portraits. */
-.flick-card__media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.75) 100%);
-}
-
-.cover-image {
-  pointer-events: none;
-  object-fit: cover;
-  -webkit-user-select: none;
-  user-select: none;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: auto;
-}
-
-/* Name sits above the role button rather than centred over the portrait —
-   the reference centres it because it labels a product, not a face. */
-.flick-card__h3 {
-  font-family: var(--font-display);
-  letter-spacing: -0.03em;
-  font-size: 2.5em;
-  font-weight: 500;
-  line-height: 1;
-  position: absolute;
-  z-index: 1;
-  bottom: 2.4em;
-  left: 0.8em;
-  right: 0.8em;
-  text-align: left;
-}
-
-.flick-card__btn {
-  background-color: var(--color-blue);
-  border-radius: 0;
-  justify-content: center;
-  align-items: center;
-  width: calc(100% - 4em);
-  height: 3.25em;
-  text-decoration: none;
-  display: flex;
-  position: absolute;
-  bottom: 2em;
-  left: 2em;
-  z-index: 1;
-}
-
-.flick-card__btn-span {
-  color: #fff;
-  font-family: var(--font-display);
-  font-size: 1em;
-  font-weight: 500;
-  text-align: center;
-}
-
-[data-flick-cards-dragger] {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: auto;
+  will-change: transform;
   touch-action: pan-y;
+  backface-visibility: hidden;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  display: flex;
+  position: relative;
 }
 
-[data-flick-cards-init][data-flick-drag-status='grab'] [data-flick-cards-dragger] {
+[data-radial-slider-list] > :first-child {
+  position: relative;
+}
+
+.radial-gsap-slider__item {
+  transform-origin: 50% var(--slider-radius);
+  flex: none;
+  position: absolute;
+}
+
+[data-radial-slider-init][data-radial-slider-drag-status='grab'] [data-radial-slider-proxy] {
   cursor: grab;
 }
-[data-flick-cards-init][data-flick-drag-status='grabbing'] [data-flick-cards-dragger] {
+[data-radial-slider-init][data-radial-slider-drag-status='grabbing'] [data-radial-slider-proxy] {
   cursor: grabbing;
 }
 
-/* Position Slides */
-[data-flick-cards-item-status] .flick-card__media {
-  transition: opacity 0.2s ease;
-  opacity: 0.5;
+@media screen and (max-width: 767px) {
+  [data-radial-slider-init] {
+    --slider-rotate: 12deg;
+    --slider-radius: 475%;
+  }
 }
 
-[data-flick-cards-item-status='2-before'] .flick-card__media,
-[data-flick-cards-item-status='2-after'] .flick-card__media {
-  transition: opacity 0.2s ease;
-  opacity: 0.75;
+/* Person card — square corners and brand palette, per the Figma design. */
+.person-card {
+  width: 20em;
+  color: var(--color-ink);
+  text-align: left;
+  background-color: #ffffff;
+  border-radius: 0;
+  flex-flow: column;
+  align-items: flex-start;
+  padding: 0.625em 0.625em 0;
+  display: flex;
+  transition: opacity 0.3s ease;
 }
 
-[data-flick-cards-item-status='active'] .flick-card__media {
+@media screen and (max-width: 767px) {
+  .person-card {
+    width: 15em;
+  }
+}
+
+.person-card__media {
+  aspect-ratio: 8 / 9;
+  width: 100%;
+  position: relative;
+}
+
+.cover-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.person-card__info {
+  flex-flow: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.25em;
+  width: 100%;
+  min-height: 4.5em;
+  padding: 0.75em 0.625em;
+  display: flex;
+}
+
+.person-card__h {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  margin: 0;
+  font-size: 1.3125em;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.person-card__role {
+  margin: 0;
+  font-size: 0.875em;
+  line-height: 1.2;
+  opacity: 0.6;
+}
+
+/* Non-active cards recede slightly. */
+[data-radial-slider-item-status='inview'] .person-card {
+  opacity: 0.55;
+}
+[data-radial-slider-item-status='active'] .person-card {
   opacity: 1;
 }
 
-/* Animate Button */
-[data-flick-cards-item-status] .flick-card__btn {
-  transition:
-    opacity 0.4s cubic-bezier(0.625, 0.05, 0, 1),
-    1s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0;
-  transform: translate(0%, 50%) rotate(0.001deg);
+/* Controls */
+.radial-gsap-slider__controls {
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
 }
 
-[data-flick-cards-item-status='active'] .flick-card__btn {
-  opacity: 1;
-  transform: translate(0%, 0%) rotate(0.001deg);
+.radial-gsap-slider__control-btn {
+  z-index: 1;
+  color: var(--color-cream);
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  background-color: var(--color-ink);
+  border: none;
+  border-radius: 0;
+  height: 3em;
+  padding: 0 1.5em;
+  font-family: var(--font-display);
+  font-size: 1em;
+  font-weight: 500;
+  position: relative;
+}
+
+.radial-gsap-slider__control-btn.is--next {
+  color: #ffffff;
+  background-color: var(--color-blue);
+}
+
+.radial-gsap-slider__dots {
+  justify-content: center;
+  align-items: center;
+  gap: 0.375em;
+  display: flex;
+}
+
+.radial-gsap-slider__control-dot {
+  z-index: 1;
+  outline-offset: 0px;
+  color: rgb(16 16 16 / 0.25);
+  cursor: pointer;
+  background-color: currentColor;
+  border: none;
+  border-radius: 50em;
+  width: 0.625em;
+  height: 0.625em;
+  padding: 0;
+  font-size: 1em;
+  transition: color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  outline: 0 !important;
+  box-shadow: 0 0 #0000 !important;
+}
+
+.radial-gsap-slider__control-dot[data-radial-slider-control-status='active'] {
+  color: var(--color-accent);
 }
 
 /* ============================================================
@@ -342,6 +363,15 @@
 .site-nav__logo,
 .site-nav__link {
   color: currentColor;
+}
+
+/* Both logo files are white artwork, so on light sections they are flipped
+   to black rather than shipping a second set of assets. */
+.site-nav__logo img {
+  transition: filter 0.3s ease;
+}
+.site-nav[data-nav-theme='light'] .site-nav__logo img {
+  filter: brightness(0);
 }
 .site-nav__link {
   transition:

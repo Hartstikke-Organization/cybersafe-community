@@ -11,14 +11,21 @@ const links = [
 
 <header class="site-nav fixed inset-x-0 top-0 z-50" data-nav data-nav-theme="dark">
 	<div class="container-large relative flex items-center justify-between py-8">
-		<a
-			href="#top"
-			class="site-nav__logo flex items-center gap-1.5"
-			aria-label="CyberSafe Community — home"
-		>
-			<Icon name="globe" class="h-6 w-6" tint />
-			<span class="text-sm opacity-40" aria-hidden="true">&times;</span>
-			<Icon name="chats" class="h-6 w-6" tint />
+		<a href="#top" class="site-nav__logo flex items-center" aria-label="CyberSafe Community — home">
+			<img
+				src="/self-imported/nav-logo-mobile.svg"
+				alt=""
+				width="61"
+				height="25"
+				class="h-6 w-auto md:hidden"
+			/>
+			<img
+				src="/self-imported/nav-logo-desktop.png"
+				alt=""
+				width="398"
+				height="49"
+				class="hidden h-6 w-auto md:block"
+			/>
 			<span class="sr-only">CyberSafe Community</span>
 		</a>
 

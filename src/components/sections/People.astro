@@ -1,5 +1,5 @@
 ---
-// Flick Cards Slider (see OSMO.md) — needs a minimum of 7 cards for drag.
+// Radial Cards Slider (see OSMO.md)
 const people = [
 	{ img: 'speakerPictureHd3', name: 'Jane Doe', role: 'Commercial Director, Zalando' },
 	{ img: 'image11', name: 'Amara Okoye', role: 'Head of Product, Niko' },
@@ -23,35 +23,55 @@ const people = [
 			These are the people you&rsquo;ll get to know
 		</h2>
 
-		<div data-flick-cards-init class="flick-group">
-			<div class="flick-group__relative-object">
-				<div class="flick-group__relative-object-before"></div>
-			</div>
-			<div data-flick-cards-collection class="flick-group__collection">
-				<div data-flick-cards-list class="flick-group__list">
+		<div
+			data-radial-slider-drag-status="grab"
+			data-radial-slider-init
+			class="radial-gsap-slider"
+		>
+			<div data-radial-slider-collection class="radial-gsap-slider__collection">
+				<div data-radial-slider-list class="radial-gsap-slider__list">
 					{
-						people.map((p) => (
-							<div data-flick-cards-item-status data-flick-cards-item class="flick-group__item">
-								<div class="flick-card">
-									<div class="flick-card__before" />
-									<div class="flick-card__media">
+						people.map((p, i) => (
+							<div
+								data-radial-slider-item-status={i === 0 ? 'active' : 'inview'}
+								data-radial-slider-item
+								class="radial-gsap-slider__item"
+							>
+								<div class="person-card">
+									<div class="person-card__media">
 										<img
-											width="256"
+											src={`/figma/${p.img}.jpg`}
 											loading="lazy"
 											alt={p.name}
-											src={`/figma/${p.img}.jpg`}
 											class="cover-image"
 										/>
-										<a href="#apply" class="flick-card__btn">
-											<span class="flick-card__btn-span">{p.role}</span>
-										</a>
-										<h3 class="flick-card__h3">{p.name}</h3>
+									</div>
+									<div class="person-card__info">
+										<h3 class="person-card__h">{p.name}</h3>
+										<p class="person-card__role">{p.role}</p>
 									</div>
 								</div>
 							</div>
 						))
 					}
 				</div>
+			</div>
+			<div class="radial-gsap-slider__controls">
+				<button data-radial-slider-control="prev" class="radial-gsap-slider__control-btn">
+					Prev
+				</button>
+				<div data-radial-slider-generate-dots class="radial-gsap-slider__dots">
+					<button
+						data-radial-slider-control="1"
+						data-radial-slider-control-status="active"
+						class="radial-gsap-slider__control-dot"></button>
+				</div>
+				<button
+					data-radial-slider-control="next"
+					class="radial-gsap-slider__control-btn is--next"
+				>
+					Next
+				</button>
 			</div>
 		</div>
 	</div>

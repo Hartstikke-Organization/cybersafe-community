@@ -6,7 +6,6 @@ const checks = [
 	'Lead sales, marketing or product, or are CIO or CEO',
 	'Work at a company building a physical product with software in it',
 	'100–1,000 employees, majority Belgian-owned, product design in Belgium',
-	'Are not a CISO or CTO',
 ];
 
 const rows = [
@@ -33,7 +32,7 @@ const rows = [
 <section id="apply" class="overflow-clip bg-cream py-section">
 	<div class="container-large grid grid-cols-1 gap-16 lg:grid-cols-2">
 		<!-- Left: profile + price -->
-		<div class="flex flex-col justify-center gap-16">
+		<div class="flex flex-col justify-between gap-16">
 			<div class="flex flex-col gap-8">
 				<h2 class="display max-w-[31.875rem] text-[2.25rem] leading-[0.9] text-ink lg:text-h2" data-anim="text">
 					Do you recognize yourself in this profile?
@@ -94,16 +93,6 @@ const rows = [
 					</div>
 				))
 			}
-
-			<label class="flex items-center gap-2 text-base text-cream">
-				<input
-					type="checkbox"
-					name="terms"
-					required
-					class="h-4 w-4 shrink-0 accent-white"
-				/>
-				<span class="underline underline-offset-2">I accept the Terms</span>
-			</label>
 
 			<Button type="submit" variant="cream" class="w-fit" label="Apply to join →" />
 		</form>
