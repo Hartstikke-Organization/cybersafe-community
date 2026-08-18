@@ -15,7 +15,9 @@ const pills = [
 ];
 ---
 
-<section id="top" class="relative overflow-clip bg-ink py-4 lg:h-[61rem]">
+<!-- Desktop hero is exactly one viewport tall; min-height keeps the content from
+     being clipped on unusually short windows (the section is overflow-clip). -->
+<section id="top" class="relative overflow-clip bg-ink py-4 lg:h-screen lg:min-h-[640px]">
 	<div class="container-large relative h-full">
 		<!-- Video-call gallery — 3 columns, right-aligned, bleeding top and bottom -->
 		<div

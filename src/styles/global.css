@@ -278,17 +278,42 @@
 .radial-gsap-slider__control-btn {
   z-index: 1;
   color: var(--color-cream);
-  letter-spacing: -0.02em;
   cursor: pointer;
   background-color: var(--color-ink);
   border: none;
   border-radius: 0;
+  justify-content: center;
+  align-items: center;
+  width: 3em;
   height: 3em;
-  padding: 0 1.5em;
-  font-family: var(--font-display);
+  padding: 0;
   font-size: 1em;
-  font-weight: 500;
+  display: flex;
   position: relative;
+}
+
+.radial-gsap-slider__control-btn svg {
+  width: 1.5em;
+  height: 1.5em;
+  transition: transform 0.3s cubic-bezier(0.625, 0.05, 0, 1);
+}
+
+.radial-gsap-slider__control-btn:hover svg {
+  transform: translateX(-0.25em);
+}
+
+.radial-gsap-slider__control-btn.is--next:hover svg {
+  transform: translateX(0.25em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radial-gsap-slider__control-btn svg {
+    transition: none;
+  }
+  .radial-gsap-slider__control-btn:hover svg,
+  .radial-gsap-slider__control-btn.is--next:hover svg {
+    transform: none;
+  }
 }
 
 .radial-gsap-slider__control-btn.is--next {

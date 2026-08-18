@@ -348,8 +348,9 @@ function initRadialCardsSlider() {
 		controls.forEach((btn) => {
 			const value = btn.getAttribute('data-radial-slider-control');
 
-			if (value === 'prev') btn.setAttribute('aria-label', 'Previous slide');
-			if (value === 'next') btn.setAttribute('aria-label', 'Next slide');
+			const labelled = btn.getAttribute('aria-label');
+			if (value === 'prev') btn.setAttribute('aria-label', labelled || 'Previous slide');
+			if (value === 'next') btn.setAttribute('aria-label', labelled || 'Next slide');
 
 			if (/^\d+$/.test(value)) {
 				btn.setAttribute('aria-label', `Go to slide ${value}`);

@@ -1,4 +1,6 @@
 ---
+import Icon from '../Icon.astro';
+
 // Radial Cards Slider (see OSMO.md)
 const people = [
 	{ img: 'speakerPictureHd3', name: 'Jane Doe', role: 'Commercial Director, Zalando' },
@@ -57,20 +59,19 @@ const people = [
 				</div>
 			</div>
 			<div class="radial-gsap-slider__controls">
-				<button data-radial-slider-control="prev" class="radial-gsap-slider__control-btn">
-					Prev
+				<button
+					data-radial-slider-control="prev"
+					class="radial-gsap-slider__control-btn"
+					aria-label="Previous person"
+				>
+					<Icon name="arrow-left" class="h-6 w-6" />
 				</button>
-				<div data-radial-slider-generate-dots class="radial-gsap-slider__dots">
-					<button
-						data-radial-slider-control="1"
-						data-radial-slider-control-status="active"
-						class="radial-gsap-slider__control-dot"></button>
-				</div>
 				<button
 					data-radial-slider-control="next"
 					class="radial-gsap-slider__control-btn is--next"
+					aria-label="Next person"
 				>
-					Next
+					<Icon name="arrow-right" class="h-6 w-6" />
 				</button>
 			</div>
 		</div>
