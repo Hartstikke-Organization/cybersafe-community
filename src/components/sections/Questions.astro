@@ -9,7 +9,6 @@ const panel = {
 		role: 'IT and business journalist',
 		avatar: 'frame16',
 	},
-	type: 'connections + systemic insight',
 };
 
 type Session = { kind: 'session'; n: number; title: string; date: string };
@@ -62,16 +61,16 @@ const items: (Session | InPerson)[] = [
 ---
 
 <section id="sessions" class="overflow-clip bg-ink py-section">
-	<div class="container-large flex flex-col gap-16">
-		<h2
+  <div class="container-large flex flex-col gap-16">
+    <h2
 			class="display max-w-[31.5625rem] text-[2.25rem] leading-none text-white lg:text-h2"
 			data-anim="text"
 		>
 			6 questions <span>you&rsquo;ll be able to answer</span>
 		</h2>
 
-		<div class="flex flex-col gap-4" data-anim-cards>
-			{
+    <div class="flex flex-col gap-4" data-anim-cards>
+      {
 				items.map((item) =>
 					item.kind === 'inperson' ? (
 						<div class="flex flex-col items-center gap-6 bg-cream py-4 pl-8 pr-4 sm:flex-row">
@@ -135,10 +134,6 @@ const items: (Session | InPerson)[] = [
 												</div>
 											</div>
 										</div>
-										<div class="flex flex-1 flex-col gap-6 bg-black p-4">
-											<span class="eyebrow text-white opacity-60">Session type</span>
-											<p class="display text-h6 capitalize text-white">{panel.type}</p>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -146,6 +141,6 @@ const items: (Session | InPerson)[] = [
 					)
 				)
 			}
-		</div>
-	</div>
+    </div>
+  </div>
 </section>

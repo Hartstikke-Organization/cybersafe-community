@@ -218,30 +218,16 @@ function sectionAppearance(el) {
 }
 
 /* ------------------------------------------------------------------
-   Fixed nav — hides on scroll-down, returns on scroll-up, and recolours
-   itself against whatever section sits behind it.
+   Fixed nav — stays visible at all times (the page is long, so the menu
+   must remain reachable) and recolours itself against whatever section
+   sits behind it.
    ------------------------------------------------------------------ */
 function initNav() {
 	const nav = document.querySelector('[data-nav]');
 	if (!nav) return;
 
-	/* --- hide / show --- */
-	const HIDE_AFTER = 120; // px before hiding is allowed
-	const DELTA = 6; // ignore sub-pixel jitter
-	let lastY = window.scrollY;
-
-	const onScroll = () => {
-		const y = window.scrollY;
-		const diff = y - lastY;
-		if (Math.abs(diff) < DELTA) return;
-
-		// Always visible near the top; otherwise follow scroll direction.
-		nav.classList.toggle('is-hidden', y > HIDE_AFTER && diff > 0);
-		lastY = y;
-	};
-
-	onScroll();
-	window.addEventListener('scroll', onScroll, { passive: true });
+	// Never hide on scroll; clear any hidden state a previous build may have set.
+	nav.classList.remove('is-hidden');
 
 	/* --- theme per section --- */
 	const navLine = nav.offsetHeight / 2;
