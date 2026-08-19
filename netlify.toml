@@ -3,9 +3,9 @@
   publish = "dist"
 
 [build.environment]
-  # Astro 6 requires >=22.12 (see "engines" in package.json). Pinned here so the
+  # Node 24 LTS (see "engines" in package.json and .nvmrc). Pinned here so the
   # build image does not fall back to an older default and fail the install.
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
 
 # Static export: hashed assets can be cached forever, HTML must not be.
 [[headers]]
