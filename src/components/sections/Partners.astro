@@ -2,28 +2,30 @@
 import Icon from '../Icon.astro';
 
 const logos = [
-	{ src: 'image1', alt: 'Toreon', cls: 'h-[3.5625rem] w-[8.9375rem]' },
-	{ src: 'image2', alt: 'eBO Enterprises', cls: 'h-[2.9375rem] w-[4.625rem]' },
-	{ src: 'image3', alt: 'Colruyt Group', cls: 'h-[3.1875rem] w-[7rem]' },
-	{ src: 'image4', alt: 'Zalando', cls: 'h-[1.375rem] w-[7.125rem]' },
+	{ src: 'image1', alt: 'Toreon', cls: 'h-[2.1875rem] w-[5.5rem]' },
+	{ src: 'image2', alt: 'eBO Enterprises', cls: 'h-[1.8125rem] w-[2.875rem]' },
+	{ src: 'image3', alt: 'Colruyt Group', cls: 'h-[2rem] w-[4.3125rem]' },
+	{ src: 'image4', alt: 'Zalando', cls: 'h-[0.875rem] w-[4.375rem]' },
 ];
 ---
 
 <section class="overflow-clip bg-ink py-16">
-	<div class="container-large flex flex-col items-center justify-between gap-10 lg:flex-row">
-		<p class="display text-center text-xl text-cream lg:text-left lg:text-h5">
+	<div
+		class="container-large flex flex-col items-center gap-8 lg:flex-row lg:flex-nowrap lg:justify-between lg:gap-10"
+	>
+		<p class="display shrink-0 text-center text-base text-cream lg:text-left lg:text-sm">
 			A Conversation Starter community in partnership with Cybersafe
 		</p>
 
-		<div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-			<Icon name="vincotte" class="h-[3.8125rem] w-[3.875rem] shrink-0" />
+		<div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 lg:flex-nowrap">
+			<Icon name="vincotte" class="h-[2.375rem] w-[2.4375rem] shrink-0" />
 			{
 				logos.map((l) => (
 					<img
 						src={`/figma/${l.src}.png`}
 						alt={l.alt}
 						loading="lazy"
-						class:list={['object-contain', l.cls]}
+						class:list={['shrink-0 object-contain', l.cls]}
 					/>
 				))
 			}

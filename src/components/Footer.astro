@@ -1,6 +1,4 @@
 ---
-import Icon from '../components/Icon.astro';
-
 const links = [
 	{ label: 'For who', href: '#for-who' },
 	{ label: 'The sessions', href: '#sessions' },
@@ -24,14 +22,12 @@ const links = [
 			}
 		</nav>
 
-		<div class="flex w-full items-start justify-between gap-4">
-			<span
-				class="display whitespace-nowrap text-[13vw] leading-[0.9] text-ink/[0.09] lg:text-[8rem]"
-			>
-				<span class="block">CyberSafe</span>
-				<span class="block">Community</span>
-			</span>
-			<Icon name="globe" class="hidden h-16 w-16 shrink-0 text-ink sm:block" tint />
-		</div>
+		<img
+			src="/self-imported/Header/7/footer-logo.svg"
+			alt="CyberSafe Community"
+			width="1400"
+			height="108"
+			class="h-auto w-full"
+		/>
 	</div>
 </footer>
