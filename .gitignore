@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # local review notes (not for the repo)
 feedback.md
+
+# upload archives (extracted folder is what we use)
+public/self-imported/**/*.zip
+public/self-imported/*.zip

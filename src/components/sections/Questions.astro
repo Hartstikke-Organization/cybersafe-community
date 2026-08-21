@@ -1,17 +1,24 @@
 ---
 import Icon from '../Icon.astro';
 
-// Every session shares the same panel content for now.
-const panel = {
-	desc: 'Every role feels security differently: sales in RFPs and customer questionnaires, marketing in reputation and trust claims, product in what you dare to build, the CIO in what keeps them up at night, the CEO in liability. And behind each of those sits a different driver: customers demanding it, legislation imposing it (NIS2, CRA), or the threat landscape forcing it (AI, geopolitics). This session lays those perspectives side by side. Participants get to know each other and immediately see the community’s core idea in action: security is broader than "something IT does": it’s something your company is.',
-	host: {
-		name: 'William Visterin',
-		role: 'IT and business journalist',
-		avatar: 'frame16',
-	},
+// William moderates every session — shown once in the section header now,
+// instead of repeated inside each accordion.
+const host = {
+	name: 'William Visterin',
+	role: 'IT and business journalist',
+	avatar: 'william',
 };
 
-type Session = { kind: 'session'; n: number; title: string; date: string };
+// Guest speaker(s) per session. Placeholder line-up until the real names land.
+const speakers = [
+	{ name: 'William Visterin', role: 'IT and business journalist', avatar: 'william' },
+	{ name: 'William Visterin', role: 'IT and business journalist', avatar: 'william' },
+];
+
+const desc =
+	'Every role feels security differently: sales in RFPs and customer questionnaires, marketing in reputation and trust claims, product in what you dare to build, the CIO in what keeps them up at night, the CEO in liability. And behind each of those sits a different driver: customers demanding it, legislation imposing it (NIS2, CRA), or the threat landscape forcing it (AI, geopolitics). This session lays those perspectives side by side. Participants get to know each other and immediately see the community’s core idea in action: security is broader than "something IT does": it’s something your company is.';
+
+type Session = { kind: 'session'; n: number; title: string; date: string; time?: string };
 type InPerson = { kind: 'inperson'; title: string; date: string; img: string };
 
 const items: (Session | InPerson)[] = [
@@ -20,18 +27,21 @@ const items: (Session | InPerson)[] = [
 		n: 1,
 		title: 'Where does security actually touch your part of the business?',
 		date: '12 nov 2026',
+		time: '17:30',
 	},
 	{
 		kind: 'session',
 		n: 2,
 		title: "Your company already does a lot on security: why can't sales and marketing talk about it?",
 		date: '10 dec 2026',
+		time: '17:30',
 	},
 	{
 		kind: 'session',
 		n: 3,
 		title: 'Your product is secure… until your customer uses it. How far does your responsibility reach?',
 		date: '21 jan 2027',
+		time: '17:30',
 	},
 	{
 		kind: 'inperson',
@@ -44,49 +54,91 @@ const items: (Session | InPerson)[] = [
 		n: 4,
 		title: "Everyone has to comply with the CRA. Who's actually going to win something with it?",
 		date: '18 feb 2027',
+		time: '17:30',
 	},
 	{
 		kind: 'session',
 		n: 5,
 		title: 'How much risk is your company really willing to take - and would your colleagues give the same answer?',
 		date: '11 mar 2027',
+		time: '17:30',
 	},
 	{
 		kind: 'session',
 		n: 6,
 		title: 'When your incident comes, will you lose trust or win it?',
 		date: '15 apr 2027',
+		time: '17:30',
 	},
 ];
 ---
 
 <section id="sessions" class="overflow-clip bg-ink py-section">
-  <div class="container-large flex flex-col gap-16">
-    <h2
-			class="display max-w-[31.5625rem] text-[2.25rem] leading-none text-white lg:text-h2"
-			data-anim="text"
-		>
-			6 questions <span>you&rsquo;ll be able to answer</span>
-		</h2>
+	<div class="container-large flex flex-col gap-16">
+		<!-- Heading + recurring host, laid out on the same 2-col grid as the
+		     section above so the host card lines up cleanly. -->
+		<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
+			<h2
+				class="display max-w-[31.5625rem] text-[2.25rem] leading-none text-white lg:text-h2"
+				data-anim="text"
+			>
+				6 questions <span>you&rsquo;ll be able to answer</span>
+			</h2>
 
-    <div class="flex flex-col gap-4" data-anim-cards>
-      {
+			<div class="flex flex-col gap-6 border border-white/15 p-8">
+				<span class="eyebrow text-white opacity-60">Host for the sessions</span>
+				<div class="flex items-center gap-6">
+					<img
+						src={`/figma/${host.avatar}.jpg`}
+						alt={host.name}
+						loading="lazy"
+						class="h-12 w-12 rounded-full bg-mist object-cover"
+					/>
+					<div class="flex flex-1 flex-col gap-2 text-white">
+						<p class="display text-h6">{host.name}</p>
+						<p class="text-base font-medium leading-[1.2] opacity-60">{host.role}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-4" data-anim-cards>
+			{
 				items.map((item) =>
 					item.kind === 'inperson' ? (
-						<div class="flex flex-col items-center gap-6 bg-cream py-4 pl-8 pr-4 sm:flex-row">
-							<div class="flex flex-1 flex-col justify-center gap-2">
-								<span class="eyebrow text-ink/60">In person session</span>
-								<h3 class="display max-w-[42.125rem] text-h4 text-ink">{item.title}</h3>
-								<span class="mt-2 inline-flex w-fit items-center gap-2 bg-accent p-1">
-									<Icon name="calendar" class="h-6 w-6 text-ink" tint />
-									<span class="eyebrow text-ink">{item.date}</span>
-								</span>
+						<div class="flex flex-col gap-6 bg-cream p-4 sm:flex-row sm:items-stretch">
+							<div class="flex flex-1 flex-col justify-center gap-6 py-4 pl-4">
+								<div class="flex flex-col gap-2">
+									<span class="eyebrow text-ink/60">Peer dinner</span>
+									<h3 class="display max-w-[42.125rem] text-h4 text-ink">{item.title}</h3>
+									<span class="mt-2 inline-flex w-fit items-center gap-2 bg-accent p-1">
+										<Icon name="calendar" class="h-6 w-6 text-ink" tint />
+										<span class="eyebrow text-ink">{item.date}</span>
+									</span>
+								</div>
+
+								<div class="flex flex-col gap-4">
+									<span class="eyebrow text-ink/60">Speaker(s)</span>
+									<div class="flex items-center gap-4">
+										<img
+											src={`/figma/${host.avatar}.jpg`}
+											alt={host.name}
+											loading="lazy"
+											class="h-12 w-12 rounded-full object-cover"
+										/>
+										<div class="flex flex-col gap-1">
+											<p class="display text-h6 text-ink">{host.name}</p>
+											<p class="text-base font-medium leading-[1.2] text-ink/60">{host.role}</p>
+										</div>
+									</div>
+								</div>
 							</div>
+
 							<img
 								src={`/figma/${item.img}.jpg`}
 								alt="Kasteel van Laarne"
 								loading="lazy"
-								class="h-[11.4375rem] w-full object-cover sm:w-[39.1875rem]"
+								class="h-[11.4375rem] w-full object-cover sm:h-auto sm:w-[39.1875rem] sm:self-stretch"
 							/>
 						</div>
 					) : (
@@ -101,10 +153,18 @@ const items: (Session | InPerson)[] = [
 										{item.title}
 									</h3>
 								</div>
-								<Icon name="calendar-white" class="hidden h-6 w-6 shrink-0 sm:block" />
-								<span class="eyebrow hidden w-[18.75rem] shrink-0 text-fog lg:block">
-									{item.date}
-								</span>
+								<div class="hidden w-[18.75rem] shrink-0 flex-col gap-2 lg:flex">
+									<span class="flex items-center gap-2 text-fog">
+										<Icon name="calendar-white" class="h-6 w-6" />
+										<span class="eyebrow">{item.date}</span>
+									</span>
+									{item.time && (
+										<span class="flex items-center gap-2 text-fog">
+											<Icon name="clock" class="h-6 w-6" />
+											<span class="eyebrow">{item.time}</span>
+										</span>
+									)}
+								</div>
 								<span class="flex h-10 w-10 shrink-0 items-center justify-center bg-accent">
 									<Icon name="plus" class="accordion-icon h-6 w-6 text-white" tint />
 								</span>
@@ -114,25 +174,25 @@ const items: (Session | InPerson)[] = [
 								<div class="grid grid-cols-1 gap-8 pt-6 lg:grid-cols-2">
 									<div class="flex flex-col gap-6 bg-black p-4">
 										<span class="eyebrow text-white opacity-60">Session Description</span>
-										<p class="text-base font-medium leading-[1.5] text-white">{panel.desc}</p>
+										<p class="text-base font-medium leading-[1.5] text-white">{desc}</p>
 									</div>
-									<div class="flex flex-col gap-8">
-										<div class="flex flex-col gap-6 bg-black p-4">
-											<span class="eyebrow text-white opacity-60">Host for this session</span>
-											<div class="flex items-center gap-6">
-												<img
-													src={`/figma/${panel.host.avatar}.jpg`}
-													alt={panel.host.name}
-													loading="lazy"
-													class="h-12 w-12 rounded-full bg-mist object-cover"
-												/>
-												<div class="flex flex-1 flex-col gap-2 text-white">
-													<p class="display text-h6">{panel.host.name}</p>
-													<p class="text-base font-medium leading-[1.2] opacity-60">
-														{panel.host.role}
-													</p>
+									<div class="flex flex-col gap-6 bg-black p-4">
+										<span class="eyebrow text-white opacity-60">Speaker(s) for this session</span>
+										<div class="flex flex-col gap-4">
+											{speakers.map((s) => (
+												<div class="flex items-center gap-6">
+													<img
+														src={`/figma/${s.avatar}.jpg`}
+														alt={s.name}
+														loading="lazy"
+														class="h-12 w-12 rounded-full bg-mist object-cover"
+													/>
+													<div class="flex flex-1 flex-col gap-2 text-white">
+														<p class="display text-h6">{s.name}</p>
+														<p class="text-base font-medium leading-[1.2] opacity-60">{s.role}</p>
+													</div>
 												</div>
-											</div>
+											))}
 										</div>
 									</div>
 								</div>
@@ -141,6 +201,6 @@ const items: (Session | InPerson)[] = [
 					)
 				)
 			}
-    </div>
-  </div>
+		</div>
+	</div>
 </section>

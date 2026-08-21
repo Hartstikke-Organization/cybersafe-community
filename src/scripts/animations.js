@@ -3,9 +3,10 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Draggable from 'gsap/Draggable';
 import InertiaPlugin from 'gsap/InertiaPlugin';
 import CustomEase from 'gsap/CustomEase';
+import Flip from 'gsap/Flip';
 import LocomotiveScroll from 'locomotive-scroll';
 
-gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, CustomEase);
+gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, CustomEase, Flip);
 CustomEase.create('radial', '0.25, 0.1, 0, 1');
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -662,6 +663,71 @@ function initRadialCardsSlider() {
 	window.addEventListener('resize', initRadialCardsSlider._resize);
 }
 
+/* ------------------------------------------------------------------
+   Hero breakout animation — 12 participants flip and reshuffle into new
+   breakout groups, with a question card surfacing between each scramble.
+   ------------------------------------------------------------------ */
+function initBreakout() {
+	const root = document.querySelector('[data-breakout]');
+	if (!root) return;
+
+	const tiles = gsap.utils.toArray('[data-tile]', root);
+	if (tiles.length < 2) return;
+	const grid = tiles[0].parentElement;
+	const scrim = root.querySelector('[data-breakout-scrim]');
+	const qWrap = root.querySelector('[data-breakout-q]');
+	const qLabel = root.querySelector('[data-q-label]');
+	const qText = root.querySelector('[data-q-text]');
+
+	const questions = [
+		"What's the one default setting in your product you'd change tomorrow to make insecure use harder? Who do you need to convince?",
+		'Where does security actually touch your part of the business?',
+		'When your incident comes, will you lose trust — or win it?',
+	];
+
+	gsap.set(qWrap, { autoAlpha: 0, y: 14 });
+	gsap.set(scrim, { autoAlpha: 0 });
+
+	let round = 0;
+
+	// Reorder the grid's children so participants trade cells, then let Flip
+	// animate every tile sliding from its old seat to its new one — it reads as
+	// people physically swapping places between breakout groups.
+	function swapSeats() {
+		const state = Flip.getState(tiles);
+		gsap.utils.shuffle(tiles.slice()).forEach((tile) => grid.appendChild(tile));
+		Flip.from(state, {
+			duration: 0.9,
+			ease: 'power2.inOut',
+			absolute: true,
+			stagger: { each: 0.03, from: 'random' },
+			onComplete: askQuestion,
+		});
+	}
+
+	// A shared question drops in over the freshly-formed groups, holds, clears,
+	// and they "talk" for ~2s before the next reshuffle.
+	function askQuestion() {
+		qLabel.textContent = `Question ${round + 1}`;
+		qText.textContent = questions[round % questions.length];
+		gsap
+			.timeline({
+				onComplete: () => {
+					round += 1;
+					swapSeats();
+				},
+			})
+			.to(scrim, { autoAlpha: 1, duration: 0.4 })
+			.to(qWrap, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '<')
+			.to({}, { duration: 1.8 })
+			.to(qWrap, { autoAlpha: 0, y: 14, duration: 0.4, ease: 'power2.in' })
+			.to(scrim, { autoAlpha: 0, duration: 0.4 }, '<')
+			.to({}, { duration: 2 });
+	}
+
+	gsap.delayedCall(0.8, swapSeats);
+}
+
 function init() {
 	initSmoothScroll();
 	initNav();
@@ -673,6 +739,7 @@ function init() {
 		initAvatarArc();
 		initFlowTimeline();
 		initQuoteScale();
+		initBreakout();
 	}
 
 	// Images settle late; re-measure once everything has loaded.
