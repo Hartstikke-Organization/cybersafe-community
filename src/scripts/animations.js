@@ -3,10 +3,9 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Draggable from 'gsap/Draggable';
 import InertiaPlugin from 'gsap/InertiaPlugin';
 import CustomEase from 'gsap/CustomEase';
-import Flip from 'gsap/Flip';
 import LocomotiveScroll from 'locomotive-scroll';
 
-gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, CustomEase, Flip);
+gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, CustomEase);
 CustomEase.create('radial', '0.25, 0.1, 0, 1');
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -671,9 +670,8 @@ function initBreakout() {
 	const root = document.querySelector('[data-breakout]');
 	if (!root) return;
 
-	const tiles = gsap.utils.toArray('[data-tile]', root);
-	if (tiles.length < 2) return;
-	const grid = tiles[0].parentElement;
+	const cols = gsap.utils.toArray('[data-col]', root);
+	if (!cols.length) return;
 	const scrim = root.querySelector('[data-breakout-scrim]');
 	const qWrap = root.querySelector('[data-breakout-q]');
 	const qLabel = root.querySelector('[data-q-label]');
@@ -688,25 +686,45 @@ function initBreakout() {
 	gsap.set(qWrap, { autoAlpha: 0, y: 14 });
 	gsap.set(scrim, { autoAlpha: 0 });
 
+	// Each column strip is COPIES identical copies stacked vertically (Hero.astro).
+	// We keep its offset wrapped inside one copy's height, so nudging a whole
+	// column by one tile up or down loops seamlessly — the duplicated copies above
+	// and below hide the seam. Calm, uniform column motion instead of a scramble.
+	const COPIES = 4;
+	const strips = cols.map((col) => {
+		const tileH = col.children[0].getBoundingClientRect().height;
+		const setH = (col.children.length / COPIES) * tileH;
+		const wrap = gsap.utils.wrap(-2 * setH, -setH);
+		const s = { col, tileH, setH, wrap, y: wrap(-1.5 * setH) };
+		gsap.set(col, { y: s.y });
+		return s;
+	});
+	if (strips.some((s) => !s.setH)) return; // not laid out (e.g. below lg)
+
 	let round = 0;
 
-	// Reorder the grid's children so participants trade cells, then let Flip
-	// animate every tile sliding from its old seat to its new one — it reads as
-	// people physically swapping places between breakout groups.
-	function swapSeats() {
-		const state = Flip.getState(tiles);
-		gsap.utils.shuffle(tiles.slice()).forEach((tile) => grid.appendChild(tile));
-		Flip.from(state, {
-			duration: 0.9,
-			ease: 'power2.inOut',
-			absolute: true,
-			stagger: { each: 0.03, from: 'random' },
-			onComplete: askQuestion,
+	// Move every column by exactly one tile (each independently up or down), then
+	// wrap the offset back into the middle band with an invisible jump.
+	function shiftColumns() {
+		strips.forEach((s) => {
+			const dir = Math.random() < 0.5 ? 1 : -1;
+			const target = s.y + dir * s.tileH;
+			gsap.to(s.col, {
+				y: target,
+				duration: 1.1,
+				ease: 'power2.inOut',
+				onComplete: () => {
+					const wrapped = s.wrap(target);
+					if (wrapped !== target) gsap.set(s.col, { y: wrapped });
+					s.y = wrapped;
+				},
+			});
 		});
+		gsap.delayedCall(1.35, askQuestion);
 	}
 
-	// A shared question drops in over the freshly-formed groups, holds, clears,
-	// and they "talk" for ~2s before the next reshuffle.
+	// A shared question drops in over the settled columns, holds, clears, and
+	// they "talk" for ~2s before the next shift.
 	function askQuestion() {
 		qLabel.textContent = `Question ${round + 1}`;
 		qText.textContent = questions[round % questions.length];
@@ -714,7 +732,7 @@ function initBreakout() {
 			.timeline({
 				onComplete: () => {
 					round += 1;
-					swapSeats();
+					shiftColumns();
 				},
 			})
 			.to(scrim, { autoAlpha: 1, duration: 0.4 })
@@ -725,7 +743,25 @@ function initBreakout() {
 			.to({}, { duration: 2 });
 	}
 
-	gsap.delayedCall(0.8, swapSeats);
+	gsap.delayedCall(0.8, shiftColumns);
+}
+
+/* ------------------------------------------------------------------
+   Strikethrough — draws the line across [data-strike] text as it scrolls
+   through, via a --strike (0→1) custom property the CSS reads.
+   ------------------------------------------------------------------ */
+function initStrike() {
+	gsap.utils.toArray('[data-strike]').forEach((el) => {
+		gsap.fromTo(
+			el,
+			{ '--strike': 0 },
+			{
+				'--strike': 1,
+				ease: 'none',
+				scrollTrigger: { trigger: el, start: 'top 80%', end: 'top 45%', scrub: true },
+			}
+		);
+	});
 }
 
 function init() {
@@ -740,6 +776,7 @@ function init() {
 		initFlowTimeline();
 		initQuoteScale();
 		initBreakout();
+		initStrike();
 	}
 
 	// Images settle late; re-measure once everything has loaded.

@@ -2,16 +2,26 @@
 import Icon from '../Icon.astro';
 
 // Radial Cards Slider (see OSMO.md)
+// Real early members; each card links to their LinkedIn.
 const people = [
-	{ img: 'speakerPictureHd3', name: 'Jane Doe', role: 'Commercial Director, Zalando' },
-	{ img: 'image11', name: 'Amara Okoye', role: 'Head of Product, Niko' },
-	{ img: 'hillaryUngsonCommunityPicture4', name: 'Lotte Maes', role: 'CMO, Barco' },
-	{ img: 'image12', name: 'Rohan Desai', role: 'CIO, Televic' },
-	{ img: 'speakerPictureHd5', name: 'Yves Mertens', role: 'CEO, Qbic' },
-	{ img: 'hillaryUngsonCommunityPicture3', name: 'Karim Haddad', role: 'VP Sales, Sirris' },
-	{ img: 'image14', name: 'Daniel Owusu', role: 'Product Lead, Sensolus' },
-	{ img: 'hillaryUngsonCommunityPicture5', name: 'Tom Claes', role: 'CEO, Xenics' },
-	{ img: 'image15', name: 'Sofie Peeters', role: 'Marketing Director, Ontex' },
+	{
+		img: '/self-imported/people/maximbaele.jpg',
+		name: 'Maxim Baele',
+		role: 'Product Security Consultant, Toreon',
+		linkedin: 'https://www.linkedin.com/in/maximbaele/',
+	},
+	{
+		img: '/self-imported/people/stevenwierckx.jpg',
+		name: 'Steven Wierckx',
+		role: 'Principal Consultant, Toreon',
+		linkedin: 'https://www.linkedin.com/in/steven-wierckx/',
+	},
+	{
+		img: '/self-imported/people/williamvisterin.jpg',
+		name: 'William Visterin',
+		role: 'IT & business journalist',
+		linkedin: 'https://www.linkedin.com/in/visterin/',
+	},
 ];
 ---
 
@@ -39,12 +49,18 @@ const people = [
 								data-radial-slider-item
 								class="radial-gsap-slider__item"
 							>
-								<div class="person-card">
+								<a
+									href={p.linkedin}
+									target="_blank"
+									rel="noopener"
+									class="person-card"
+								>
 									<div class="person-card__media">
 										<img
-											src={`/figma/${p.img}.jpg`}
+											src={encodeURI(p.img)}
 											loading="lazy"
 											alt={p.name}
+											draggable="false"
 											class="cover-image"
 										/>
 									</div>
@@ -52,7 +68,7 @@ const people = [
 										<h3 class="person-card__h">{p.name}</h3>
 										<p class="person-card__role">{p.role}</p>
 									</div>
-								</div>
+								</a>
 							</div>
 						))
 					}

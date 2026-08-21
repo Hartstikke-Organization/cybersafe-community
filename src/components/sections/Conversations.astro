@@ -1,24 +1,51 @@
 ---
 import Button from '../Button.astro';
+
+// The "breakout" visual is built in HTML now (was a flattened export).
+const avatarDir = '/self-imported/hero-avatars';
+const faces = [
+	'Hillary Ungson Community Picture 1.webp',
+	'Speaker Picture HD 2.webp',
+	'image 9.webp',
+];
 ---
 
 <section class="overflow-clip bg-ink pt-section">
 	<div class="container-large grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-		<!-- Uploaded visual — the question card is already part of the image. -->
-		<img
-			src="/self-imported/Header/7/breakout-visual.jpg"
-			alt="Three participants in a breakout, with the session's first question overlaid"
-			loading="lazy"
-			width="662"
-			height="570"
-			class="h-auto w-full max-w-[41.375rem] object-cover"
-			data-anim="card"
-		/>
+		<!-- Breakout visual: three participants with the session's first question
+		     pinned to the bottom-left (position:relative wrapper, absolute card). -->
+		<div class="lecture-visual" data-anim="card">
+			<div class="lecture-visual__faces">
+				{
+					faces.map((f) => (
+						<img
+							src={`${avatarDir}/${encodeURIComponent(f)}`}
+							alt=""
+							loading="lazy"
+							class="lecture-visual__face"
+						/>
+					))
+				}
+			</div>
+
+			<div class="lecture-visual__q">
+				<span class="lecture-visual__q-label">Question 1</span>
+				<div class="lecture-visual__q-card">
+					<p>
+						What&rsquo;s the one default setting in your product you&rsquo;d change
+						tomorrow to make insecure use harder? Who do you need to convince?
+					</p>
+				</div>
+			</div>
+		</div>
 
 		<!-- Copy -->
 		<div class="flex flex-col gap-8">
-			<h2 class="display max-w-[32.9375rem] text-[2.25rem] leading-[0.9] text-white/60 lg:text-h2" data-anim="text">
-				<span class="line-through decoration-from-font">This isn&rsquo;t a lecture series,</span>
+			<h2
+				class="display max-w-[32.9375rem] text-[2.25rem] leading-[0.9] text-white/60 lg:text-h2"
+				data-anim="text"
+			>
+				<span class="lecture-strike" data-strike>This isn&rsquo;t a lecture series,</span>
 				<span class="text-white"> these are intense conversations and you&rsquo;re in them</span>
 			</h2>
 
@@ -36,3 +63,65 @@ import Button from '../Button.astro';
 		</div>
 	</div>
 </section>
+
+<style>
+	.lecture-visual {
+		position: relative;
+		width: 100%;
+		max-width: 41.375rem;
+		aspect-ratio: 662 / 570;
+		overflow: hidden;
+	}
+	.lecture-visual__faces {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.lecture-visual__face {
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+	}
+	.lecture-visual__q {
+		position: absolute;
+		left: 1.5rem;
+		bottom: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		max-width: min(20rem, 72%);
+	}
+	.lecture-visual__q-label {
+		align-self: flex-start;
+		background: var(--color-blue, #273c8b);
+		color: #fff;
+		font-family: var(--font-mono, ui-monospace, monospace);
+		font-size: 0.5625rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding: 0.2rem 0.45rem;
+		line-height: 1;
+	}
+	.lecture-visual__q-card {
+		background: #f7f5f0;
+		color: #101010;
+		padding: 0.75rem 0.9rem;
+		font-size: 0.8125rem;
+		line-height: 1.3;
+		letter-spacing: -0.01em;
+	}
+
+	/* Strikethrough drawn left→right on scroll (see initStrike in animations.js).
+	   --strike goes 0→1; the reduced-motion fallback shows it fully struck. */
+	.lecture-strike {
+		background: linear-gradient(currentColor, currentColor) no-repeat left 58% /
+			calc(var(--strike, 0) * 100%) 0.07em;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.lecture-strike {
+			--strike: 1;
+		}
+	}
+</style>

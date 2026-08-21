@@ -368,12 +368,10 @@
   /* --nav-scrim is set from the section's own background colour, so the
      fade is invisible against the section but keeps the items off body text. */
   --nav-scrim: transparent;
-  background-image: linear-gradient(
-    to bottom,
-    var(--nav-scrim) 0%,
-    var(--nav-scrim) 55%,
-    transparent 100%
-  );
+  /* Solid fill (was a fade-out gradient, which rendered with seams on some
+     GPUs). --nav-scrim is the current section's own colour, so it reads as
+     part of the section rather than a bar. */
+  background-color: var(--nav-scrim);
   transition:
     transform 0.45s cubic-bezier(0.625, 0.05, 0, 1),
     color 0.3s ease,

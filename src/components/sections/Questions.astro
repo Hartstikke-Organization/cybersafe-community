@@ -5,7 +5,8 @@ import Icon from '../Icon.astro';
 // instead of repeated inside each accordion.
 const host = {
 	name: 'William Visterin',
-	role: 'IT and business journalist',
+	role: 'IT & business journalist',
+	bio: 'IT & business journalist (incl. De Tijd), editor-in-chief of Computable.be, program manager of Cybersec Europe. His whole career revolves around getting management and IT to speak the same language.',
 	avatar: 'william',
 };
 
@@ -87,16 +88,16 @@ const items: (Session | InPerson)[] = [
 
 			<div class="flex flex-col gap-6 border border-white/15 p-8">
 				<span class="eyebrow text-white opacity-60">Host for the sessions</span>
-				<div class="flex items-center gap-6">
+				<div class="flex items-start gap-6">
 					<img
 						src={`/figma/${host.avatar}.jpg`}
 						alt={host.name}
 						loading="lazy"
-						class="h-12 w-12 rounded-full bg-mist object-cover"
+						class="h-20 w-20 shrink-0 bg-mist object-cover"
 					/>
 					<div class="flex flex-1 flex-col gap-2 text-white">
 						<p class="display text-h6">{host.name}</p>
-						<p class="text-base font-medium leading-[1.2] opacity-60">{host.role}</p>
+						<p class="text-base font-medium leading-[1.4] opacity-60">{host.bio}</p>
 					</div>
 				</div>
 			</div>
@@ -108,13 +109,12 @@ const items: (Session | InPerson)[] = [
 					item.kind === 'inperson' ? (
 						<div class="flex flex-col gap-6 bg-cream p-4 sm:flex-row sm:items-stretch">
 							<div class="flex flex-1 flex-col justify-center gap-6 py-4 pl-4">
-								<div class="flex flex-col gap-2">
-									<span class="eyebrow text-ink/60">Peer dinner</span>
-									<h3 class="display max-w-[42.125rem] text-h4 text-ink">{item.title}</h3>
-									<span class="mt-2 inline-flex w-fit items-center gap-2 bg-accent p-1">
+								<div class="flex flex-col gap-3">
+									<span class="inline-flex w-fit items-center gap-2 bg-accent p-1">
 										<Icon name="calendar" class="h-6 w-6 text-ink" tint />
 										<span class="eyebrow text-ink">{item.date}</span>
 									</span>
+									<h3 class="display max-w-[42.125rem] text-h4 text-ink">{item.title}</h3>
 								</div>
 
 								<div class="flex flex-col gap-4">
